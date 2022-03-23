@@ -17,7 +17,7 @@
     "server": "cd server && nodemon server.js",
     "client": "cd client && yarn start",
     "dev": "concurrently -n 'server,client' -c 'red,blue' \"yarn server\" \"yarn client\"",
-    "build": "cd client && yarn run build"
+    "build": "cd client && yarn install && yarn run build"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
