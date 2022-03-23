@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const Create = () => {
   const [postData, setPostData] = useState({
@@ -10,6 +11,7 @@ const Create = () => {
   });
   const [cookies, setCookies] = useCookies(['token']);
   const navigate = useNavigate();
+  const { REACT_APP_API_URL } = process.env;
 
   const handleInput = ({ target }) => {
     const { name, value } = target;
@@ -36,7 +38,7 @@ const Create = () => {
 
     await axios({
       method: 'POST',
-      url: 'http://localhost:8080/api/posts',
+      url: `${REACT_APP_API_URL}/posts`,
       data: postData,
       headers: {
         'x-access-token': cookies.token,
@@ -54,7 +56,7 @@ const Create = () => {
 
   return (
     <div>
-      <h1>Create</h1>
+      <Jumbotron text={'Create'} />
       <form onSubmit={handleSubmission}>
         <label>Title: </label>
         <br />

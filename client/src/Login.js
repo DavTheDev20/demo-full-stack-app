@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({
@@ -12,6 +13,7 @@ const Login = () => {
   const [cookies, setCookie] = useCookies(['token']);
 
   const navigate = useNavigate();
+  const { REACT_APP_API_URL } = process.env;
 
   const handleInput = ({ target }) => {
     const { name, value } = target;
@@ -38,22 +40,23 @@ const Login = () => {
 
     await axios({
       method: 'POST',
-      url: 'http://localhost:8080/api/user/login',
+      url: `${REACT_APP_API_URL}/user/login`,
       data: userInfo,
     })
       .then((res) => {
         console.log(res);
         setCookie('token', res.data.token);
-        navigate('/'); // Change to posts page
+        window.location.reload();
       })
       .catch((err) => {
+        alert(err.response.data.msg);
         console.log(err.response);
       });
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <Jumbotron text={'Login'} />
       <form onSubmit={handleLogin}>
         <label>Email: </label>
         <br />
@@ -72,7 +75,7 @@ const Login = () => {
           value={userInfo.password}
           onChange={handleInput}
         />
-        <br />
+
         <br />
         <button>Login</button>
       </form>

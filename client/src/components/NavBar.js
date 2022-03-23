@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import './NavBar.css';
 
 const NavBar = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
@@ -21,6 +22,7 @@ const NavBar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 removeCookie('token');
+                window.location.reload();
                 navigate('/');
               }}
             >
@@ -38,6 +40,11 @@ const NavBar = () => {
         {cookies.token ? (
           <li>
             <Link to={'/create'}>Create</Link>
+          </li>
+        ) : null}
+        {cookies.token ? (
+          <li>
+            <Link to={'/profile'}>Profile</Link>
           </li>
         ) : null}
       </ul>

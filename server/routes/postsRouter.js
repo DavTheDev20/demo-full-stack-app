@@ -53,13 +53,15 @@ postsRouter
           .json({ success: false, msg: 'No post exists with that id' });
       }
 
+      const author = await User.findOne({ _id: post.author });
+
       let editable = false;
 
       if (String(post.author) === String(req.user.userId)) {
         editable = true;
       }
 
-      return res.status(200).json({ succcess: true, post, editable });
+      return res.status(200).json({ succcess: true, post, editable, author });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ success: false, error: err.message });

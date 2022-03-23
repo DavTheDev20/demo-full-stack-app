@@ -1,0 +1,14 @@
+.App button {
+  padding: 10px;
+  width: 175px;
+  margin: 2% 10%;
+  text-align: center;
+  background-color: red;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.App button:hover {
+  background-color: rgb(255, 111, 111);
+}

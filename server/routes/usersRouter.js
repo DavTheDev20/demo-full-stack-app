@@ -1,7 +1,9 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const auth = require('../middleware/auth');
 
 const usersRouter = express.Router();
 
@@ -84,6 +86,27 @@ usersRouter
     } catch (err) {
       console.error(err);
       res.status(500).json({ success: false });
+    }
+  })
+  .get('/', auth, async (req, res) => {
+    const { user } = req;
+
+    try {
+      const currentUser = await User.findOne({ _id: user.userId });
+
+      const userPosts = await Post.find({ _id: { $in: currentUser.posts } });
+
+      return res.status(200).json({
+        success: true,
+        user: {
+          username: currentUser.username,
+          email: currentUser.email,
+          likedPosts: currentUser.likedPosts,
+          posts: userPosts,
+        },
+      });
+    } catch (err) {
+      console.log(err);
     }
   });
 

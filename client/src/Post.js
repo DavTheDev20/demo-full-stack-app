@@ -3,22 +3,26 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const Post = () => {
   const { postId } = useParams();
   const [cookies, setCookies] = useCookies(['token']);
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState({ likes: [] });
+  const [author, setAuthor] = useState({ username: '' });
   const [editable, setEditable] = useState();
   const navigate = useNavigate();
+  const { REACT_APP_API_URL } = process.env;
 
   const getPost = async () => {
-    const res = await axios.get(`http://localhost:8080/api/posts/${postId}`, {
+    const res = await axios.get(`${REACT_APP_API_URL}/posts/${postId}`, {
       headers: { 'x-access-token': cookies.token },
     });
     const data = await res.data;
     setEditable(data.editable);
+    setAuthor(data.author);
 
-    const post = data.post;
+    const post = await data.post;
 
     setPost(post);
   };
@@ -27,43 +31,59 @@ const Post = () => {
     getPost();
   }, []);
 
+  const buttonStyles = {
+    padding: '7px',
+    margin: '0 10px 0 0',
+    width: '75px',
+    cursor: 'pointer',
+  };
+
   return (
     <div>
-      <h1>{post.title}</h1>
-      <h3>Created On: {new Date(post.createdAt).toLocaleDateString()}</h3>
-      <p>{post.content}</p>
-      {editable ? (
-        <>
-          <button
-            onClick={async (e) => {
-              e.preventDefault();
-              await axios
-                .delete(`http://localhost:8080/api/posts/${post._id}`, {
-                  headers: { 'x-access-token': cookies.token },
-                })
-                .then((res) => {
-                  console.log(res);
-                  navigate('/posts');
-                })
-                .catch((err) => {
-                  console.log(err);
-                  alert('Error');
-                });
-            }}
-          >
-            Delete
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
+      <Jumbotron text={post.title} />
+      <div style={{ margin: '2%' }}>
+        <h3>Posted By: {author.username}</h3>
+        <small style={{ marginBottom: '10px', display: 'block' }}>
+          Likes: {post.likes.length}
+        </small>
+        <p>{post.content}</p>
+        <div style={{ marginTop: '10px' }}>
+          {editable ? (
+            <>
+              <button
+                style={buttonStyles}
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await axios
+                    .delete(`${REACT_APP_API_URL}/posts/${post._id}`, {
+                      headers: { 'x-access-token': cookies.token },
+                    })
+                    .then((res) => {
+                      console.log(res);
+                      navigate('/posts');
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      alert('Error');
+                    });
+                }}
+              >
+                Delete
+              </button>
+              <button
+                style={buttonStyles}
+                onClick={(e) => {
+                  e.preventDefault();
 
-              navigate(`/posts/edit/${post._id}`);
-            }}
-          >
-            Edit
-          </button>
-        </>
-      ) : null}
+                  navigate(`/posts/edit/${post._id}`);
+                }}
+              >
+                Edit
+              </button>
+            </>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 };

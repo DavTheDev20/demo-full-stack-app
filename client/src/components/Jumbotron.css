@@ -1,0 +1,10 @@
+.jumbotron {
+  background-color: lightgrey;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding: 3.75%;
+}
+
+.jumbotron h1 {
+  margin-left: 10%;
+}

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({
@@ -14,7 +15,7 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const apiUrl = 'http://localhost:8080/api/user';
+  const { REACT_APP_API_URL } = process.env;
 
   const handleInput = ({ target }) => {
     const { name, value } = target;
@@ -57,7 +58,7 @@ const Register = () => {
 
     await axios({
       method: 'POST',
-      url: apiUrl + '/register',
+      url: REACT_APP_API_URL + '/user/register',
       data: userInfo,
     })
       .then((res) => {
@@ -72,7 +73,7 @@ const Register = () => {
 
   return (
     <div>
-      <h1>Register</h1>
+      <Jumbotron text={'Register'} />
       <form onSubmit={handleRegistration}>
         <label>Username: </label>
         <br />
@@ -100,7 +101,6 @@ const Register = () => {
           value={userInfo.password}
           onChange={handleInput}
         />
-        <br />
         <br />
         <button>Register</button>
       </form>

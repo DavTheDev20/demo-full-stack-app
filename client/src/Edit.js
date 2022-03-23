@@ -12,9 +12,10 @@ const Edit = () => {
     content: '',
   });
   const navigate = useNavigate();
+  const { REACT_APP_API_URL } = process.env;
 
   const getPostData = async () => {
-    const res = await axios.get(`http://localhost:8080/api/posts/${postId}`, {
+    const res = await axios.get(`${REACT_APP_API_URL}/posts/${postId}`, {
       headers: { 'x-access-token': cookies.token },
     });
 
@@ -54,7 +55,7 @@ const Edit = () => {
 
     await axios({
       method: 'PUT',
-      url: 'http://localhost:8080/api/posts/' + postId,
+      url: `${REACT_APP_API_URL}/posts/` + postId,
       data: postData,
       headers: {
         'x-access-token': cookies.token,

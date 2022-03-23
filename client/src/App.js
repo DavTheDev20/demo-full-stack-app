@@ -1,12 +1,16 @@
 import './App.css';
 import { Link } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const App = () => {
   return (
-    <>
-      <h1>Home</h1>
-      <Link to={'/register'}>Register</Link>
-    </>
+    <div className="App">
+      <Jumbotron text={'Welcome to the Demo Blog App'} />
+
+      <Link to={'/register'}>
+        <button>Register Today!</button>
+      </Link>
+    </div>
   );
 };
 

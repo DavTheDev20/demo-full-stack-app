@@ -14,33 +14,39 @@ import Posts from './Posts';
 import Create from './Create';
 import Post from './Post';
 import Edit from './Edit';
+import Profile from './Profile';
 
 ReactDOM.render(
-  <CookiesProvider>
-    <BrowserRouter>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/register" element={<Register />} />
-        {cookie.parse(document.cookie).token ? null : (
-          <Route path="/login" element={<Login />} />
-        )}
-        {cookie.parse(document.cookie).token ? (
-          <Route path="/posts" element={<Posts />} />
-        ) : null}
-        {cookie.parse(document.cookie).token ? (
-          <Route path="/create" element={<Create />} />
-        ) : null}
-        {cookie.parse(document.cookie).token ? (
-          <Route path="/posts/:postId" element={<Post />} />
-        ) : null}
-        {cookie.parse(document.cookie).token ? (
-          <Route path="/posts/edit/:postId" element={<Edit />} />
-        ) : null}
-      </Routes>
-    </BrowserRouter>
-  </CookiesProvider>,
+  <React.StrictMode>
+    <CookiesProvider>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/register" element={<Register />} />
+          {cookie.parse(document.cookie).token ? null : (
+            <Route path="/login" element={<Login />} />
+          )}
+          {cookie.parse(document.cookie).token ? (
+            <Route path="/posts" element={<Posts />} />
+          ) : null}
+          {cookie.parse(document.cookie).token ? (
+            <Route path="/create" element={<Create />} />
+          ) : null}
+          {cookie.parse(document.cookie).token ? (
+            <Route path="/posts/:postId" element={<Post />} />
+          ) : null}
+          {cookie.parse(document.cookie).token ? (
+            <Route path="/posts/edit/:postId" element={<Edit />} />
+          ) : null}
+          {cookie.parse(document.cookie).token ? (
+            <Route path="/profile" element={<Profile />} />
+          ) : null}
+        </Routes>
+      </BrowserRouter>
+    </CookiesProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
