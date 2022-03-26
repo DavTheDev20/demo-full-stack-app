@@ -16,18 +16,17 @@ postsRouter
     }
   })
   .post('/', auth, async (req, res) => {
-    const { title, content } = req.body;
+    const { content } = req.body;
 
-    if (!(title && content)) {
+    if (!content) {
       return res
         .status(400)
-        .json({ success: false, msg: 'No values retrieved for post creation' });
+        .json({ success: false, msg: 'No value retrieved for post creation' });
     }
 
     try {
       const newPost = await Post.create({
         author: req.user.userId,
-        title,
         content,
       });
 

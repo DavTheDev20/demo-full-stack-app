@@ -3,35 +3,36 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Jumbotron from './components/Jumbotron';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Create = () => {
   const [postData, setPostData] = useState({
-    title: '',
     content: '',
   });
   const [cookies, setCookies] = useCookies(['token']);
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
 
-  const handleInput = ({ target }) => {
-    const { name, value } = target;
+  // const handleInput = ({ target }) => {
+  //   const { name, value } = target;
 
-    if (name === 'title') {
-      setPostData((prevValue) => {
-        return {
-          title: value,
-          content: prevValue.content,
-        };
-      });
-    } else if (name === 'content') {
-      setPostData((prevValue) => {
-        return {
-          title: prevValue.title,
-          content: value,
-        };
-      });
-    }
-  };
+  //   if (name === 'title') {
+  //     setPostData((prevValue) => {
+  //       return {
+  //         title: value,
+  //         content: prevValue.content,
+  //       };
+  //     });
+  //   } else if (name === 'content') {
+  //     setPostData((prevValue) => {
+  //       return {
+  //         title: prevValue.title,
+  //         content: value,
+  //       };
+  //     });
+  //   }
+  // };
 
   const handleSubmission = async (e) => {
     e.preventDefault();
@@ -57,7 +58,34 @@ const Create = () => {
   return (
     <div>
       <Jumbotron text={'Create'} />
-      <form onSubmit={handleSubmission}>
+
+      <CKEditor
+        editor={ClassicEditor}
+        data="<p>Hello from CKEditor 5!</p>"
+        onReady={(editor) => {
+          // You can store the "editor" and use when it is needed.
+          console.log('Editor is ready to use!', editor);
+        }}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          setPostData((preValue) => {
+            return {
+              content: data,
+            };
+          });
+          console.log({ event, editor, data });
+        }}
+        onBlur={(event, editor) => {
+          console.log('Blur.', editor);
+        }}
+        onFocus={(event, editor) => {
+          console.log('Focus.', editor);
+        }}
+      />
+      <br />
+      <button onClick={handleSubmission}>Submit</button>
+
+      {/* <form onSubmit={handleSubmission}>
         <label>Title: </label>
         <br />
         <input
@@ -79,7 +107,7 @@ const Create = () => {
         />
         <br />
         <button>Submit</button>
-      </form>
+      </form> */}
     </div>
   );
 };

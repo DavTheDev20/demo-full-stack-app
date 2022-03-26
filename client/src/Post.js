@@ -40,13 +40,13 @@ const Post = () => {
 
   return (
     <div>
-      <Jumbotron text={post.title} />
+      {/* <Jumbotron text={post.title} /> */}
       <div style={{ margin: '2%' }}>
         <h3>Posted By: {author.username}</h3>
         <small style={{ marginBottom: '10px', display: 'block' }}>
           Likes: {post.likes.length}
         </small>
-        <p>{post.content}</p>
+        {<div dangerouslySetInnerHTML={{ __html: post.content }} />}
         <div style={{ marginTop: '10px' }}>
           {editable ? (
             <>
