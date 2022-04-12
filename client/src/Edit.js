@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Jumbotron from './components/Jumbotron';
 
 const Edit = () => {
   const { postId } = useParams();
@@ -72,7 +73,7 @@ const Edit = () => {
   };
   return (
     <>
-      <h1>Edit</h1>
+      <Jumbotron text={'Edit'} />
       <form onSubmit={handleSubmission}>
         <label>Title: </label>
         <br />
