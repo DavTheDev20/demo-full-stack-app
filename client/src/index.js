@@ -24,7 +24,9 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
-          <Route path="/register" element={<Register />} />
+          {cookie.parse(document.cookie).token ? null : (
+            <Route path="/register" element={<Register />} />
+          )}
           {cookie.parse(document.cookie).token ? null : (
             <Route path="/login" element={<Login />} />
           )}

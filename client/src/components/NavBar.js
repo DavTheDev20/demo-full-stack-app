@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const navigate = useNavigate();
   return (
@@ -22,7 +23,7 @@ const NavBar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 removeCookie('token');
-                window.location.reload();
+                // window.location.reload();
                 navigate('/');
               }}
             >

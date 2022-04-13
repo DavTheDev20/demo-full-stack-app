@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 import Jumbotron from './components/Jumbotron';
 
 const Register = () => {
@@ -11,9 +10,8 @@ const Register = () => {
     password: '',
   });
 
+  // eslint-disable-next-line no-unused-vars
   const [cookies, setCookies] = useCookies(['token']);
-
-  const navigate = useNavigate();
 
   const { REACT_APP_API_URL } = process.env;
 
@@ -64,10 +62,10 @@ const Register = () => {
       .then((res) => {
         console.log(res.data);
         setCookies('token', res.data.token);
-        navigate('/');
+        window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.data.msg);
       });
   };
 
