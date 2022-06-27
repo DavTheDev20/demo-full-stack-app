@@ -46,6 +46,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         setCookie('token', res.data.token);
+        navigate('/profile');
         window.location.reload();
       })
       .catch((err) => {
