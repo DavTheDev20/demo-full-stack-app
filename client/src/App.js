@@ -12,7 +12,7 @@ const App = () => {
       <Jumbotron text={'Welcome to the Demo Blog App'} />
 
       {cookies.token ? (
-        <h2>Enjoy the Demo Experience</h2>
+        <h2 style={{ textAlign: 'center' }}>Enjoy the Demo Experience!</h2>
       ) : (
         <Link to={'/register'}>
           <button>Register Today!</button>
