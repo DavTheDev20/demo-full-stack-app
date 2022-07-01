@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String },
     posts: { type: Array, default: [] },
     likedPosts: { type: Array, default: [] },
+    admin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

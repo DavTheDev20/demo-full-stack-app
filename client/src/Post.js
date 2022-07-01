@@ -11,6 +11,7 @@ const Post = () => {
   const [post, setPost] = useState({ likes: [] });
   const [author, setAuthor] = useState({ username: '' });
   const [editable, setEditable] = useState();
+  const [userData, setUserData] = useState({ username: '', admin: null });
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
 
@@ -27,8 +28,19 @@ const Post = () => {
     setPost(post);
   };
 
+  const getUser = async () => {
+    const res = await axios.get(REACT_APP_API_URL + '/user', {
+      headers: { 'x-access-token': cookies.token },
+    });
+    const data = await res.data;
+    console.log(data);
+
+    setUserData(data.user);
+  };
+
   useEffect(() => {
     getPost();
+    getUser();
   }, []);
 
   const buttonStyles = {
@@ -48,7 +60,7 @@ const Post = () => {
         </small>
         <p>{post.content}</p>
         <div style={{ marginTop: '10px' }}>
-          {editable ? (
+          {editable || userData.admin === true ? (
             <>
               <button
                 style={buttonStyles}

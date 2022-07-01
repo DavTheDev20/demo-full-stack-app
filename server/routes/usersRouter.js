@@ -99,6 +99,7 @@ usersRouter
       return res.status(200).json({
         success: true,
         user: {
+          admin: currentUser.admin,
           username: currentUser.username,
           email: currentUser.email,
           likedPosts: currentUser.likedPosts,
