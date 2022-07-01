@@ -7,16 +7,19 @@ import { Link } from 'react-router-dom';
 const Profile = () => {
   const [userData, setUserData] = useState({ username: '', posts: [] });
   const [cookies] = useCookies(['token']);
+  const [loading, setLoading] = useState(false);
 
   const { REACT_APP_API_URL } = process.env;
 
   const getUser = async () => {
+    setLoading(true);
     const res = await axios.get(REACT_APP_API_URL + '/user', {
       headers: { 'x-access-token': cookies.token },
     });
     const data = await res.data;
     console.log(data);
 
+    setLoading(false);
     setUserData(data.user);
   };
 
@@ -29,7 +32,9 @@ const Profile = () => {
       <Jumbotron text={'Profile'} />
       <div style={{ marginLeft: '10px' }}>
         <h2>Welcome: {userData.username}</h2>
-        {userData.posts.length > 0 ? (
+        {loading ? (
+          <h2>Loading...</h2>
+        ) : userData.posts.length > 0 ? (
           <>
             <h2 style={{ marginTop: '10px' }}>Posts: </h2>
             {userData.posts.map((post) => {
