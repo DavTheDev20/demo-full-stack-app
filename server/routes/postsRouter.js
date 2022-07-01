@@ -84,11 +84,13 @@ postsRouter.all('/:postId', auth, async (req, res, next) => {
   } else if (req.method === 'DELETE') {
     // Delete Singular Post
     try {
+      const post = await Post.findOne({ _id: postId });
+
+      const postAuthor = await User.findOne({ _id: post.author });
+
       const result = await Post.deleteOne({ _id: postId });
 
-      const postAuthor = await User.findOne({ _id: req.user.userId });
-
-      postAuthor.posts.splice(postAuthor.posts.indexOf(postId));
+      postAuthor.posts.splice(postAuthor.posts.indexOf(postId), 1);
       postAuthor.save();
 
       return res.status(200).json({ success: true, result: result });
