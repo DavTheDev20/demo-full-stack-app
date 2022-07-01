@@ -15,6 +15,7 @@ import Create from './Create';
 import Post from './Post';
 import Edit from './Edit';
 import Profile from './Profile';
+import Footer from './components/Footer';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -46,6 +47,7 @@ ReactDOM.render(
             <Route path="/profile" element={<Profile />} />
           ) : null}
         </Routes>
+        <Footer />
       </BrowserRouter>
     </CookiesProvider>
   </React.StrictMode>,

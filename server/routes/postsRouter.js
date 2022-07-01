@@ -5,8 +5,9 @@ const User = require('../models/user');
 
 const postsRouter = express.Router();
 
-postsRouter
-  .get('/', auth, async (req, res) => {
+postsRouter.all('/', auth, async (req, res, next) => {
+  if (req.method === 'GET') {
+    // Get All Posts
     try {
       const posts = await Post.find();
       res.status(200).json({ success: true, posts });
@@ -14,8 +15,8 @@ postsRouter
       console.error(err);
       res.status(500).json({ success: false });
     }
-  })
-  .post('/', auth, async (req, res) => {
+  } else if (req.method === 'POST') {
+    // Create A New Post
     const { title, content } = req.body;
 
     if (!(title && content)) {
@@ -40,10 +41,14 @@ postsRouter
       console.error(err);
       return res.status(500).json({ success: false });
     }
-  })
-  .get('/:postId', auth, async (req, res) => {
-    const { postId } = req.params;
+  }
+});
 
+postsRouter.all('/:postId', auth, async (req, res, next) => {
+  const { postId } = req.params;
+
+  if (req.method === 'GET') {
+    // GET Singular Post
     try {
       const post = await Post.findOne({ _id: postId });
 
@@ -66,10 +71,18 @@ postsRouter
       console.error(err);
       return res.status(500).json({ success: false, error: err.message });
     }
-  })
-  .delete('/:postId', auth, async (req, res) => {
-    const { postId } = req.params;
+  } else if (req.method === 'PUT') {
+    // Update Singular Post
+    try {
+      const result = await Post.updateOne({ _id: postId }, req.body);
 
+      return res.status(200).json({ success: true, result: result });
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ success: false, msg: err.message });
+    }
+  } else if (req.method === 'DELETE') {
+    // Delete Singular Post
     try {
       const result = await Post.deleteOne({ _id: postId });
 
@@ -83,18 +96,7 @@ postsRouter
       console.log(err);
       return res.status(400).json({ success: false, msg: err.message });
     }
-  })
-  .put('/:postId', auth, async (req, res) => {
-    const { postId } = req.params;
-
-    try {
-      const result = await Post.updateOne({ _id: postId }, req.body);
-
-      return res.status(200).json({ success: true, result: result });
-    } catch (err) {
-      console.log(err);
-      return res.status(400).json({ success: false, msg: err.message });
-    }
-  });
+  }
+});
 
 module.exports = postsRouter;

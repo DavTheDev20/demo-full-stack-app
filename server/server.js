@@ -12,13 +12,13 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
 if (process.env.NODE_ENV !== 'production') {
   const morgan = require('morgan');
   app.use(morgan('dev'));
 }
 
 app.use('/api/user', usersRouter);
-
 app.use('/api/posts', postsRouter);
 
 if (process.env.NODE_ENV === 'production') {

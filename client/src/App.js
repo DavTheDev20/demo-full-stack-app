@@ -10,14 +10,19 @@ const App = () => {
   return (
     <div className="App">
       <Jumbotron text={'Welcome to the Demo Blog App'} />
-
-      {cookies.token ? (
-        <h2 style={{ textAlign: 'center' }}>Enjoy the Demo Experience!</h2>
-      ) : (
-        <Link to={'/register'}>
-          <button>Register Today!</button>
-        </Link>
-      )}
+      <div className="content-section">
+        {cookies.token ? (
+          <h2>Enjoy the Demo Experience!</h2>
+        ) : (
+          <>
+            <h2>Join the trial period for this application today!</h2>
+            <h3>Click the link below!</h3>
+            <Link to={'/register'}>
+              <button>Register</button>
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

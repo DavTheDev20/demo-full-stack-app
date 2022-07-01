@@ -14,3 +14,17 @@ nav ul {
   justify-content: space-around;
   width: 35%;
 }
+
+nav a {
+  color: blue;
+}
+
+.logout-button {
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  background-color: lightblue;
+  font-size: 1.025rem;
+  color: red;
+  text-decoration: underline;
+}

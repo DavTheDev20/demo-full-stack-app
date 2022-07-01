@@ -2,6 +2,11 @@ const jwt = require('jsonwebtoken');
 
 const config = process.env;
 
+/**
+ * This middleware function takes in token via the request body, a request query, or within the request headers,
+ * then it checks the token to assure it matches to a user in the database. If it successfully matches then it
+ * returns a next() function allowing the request to go through within the API.
+ */
 const verifyToken = (req, res, next) => {
   const token =
     req.body.token || req.query.token || req.headers['x-access-token'];

@@ -20,11 +20,12 @@ const NavBar = () => {
         <li>
           {cookies.token ? (
             <button
+              className="logout-button"
               onClick={(e) => {
                 e.preventDefault();
                 removeCookie('token');
-                // window.location.reload();
                 navigate('/');
+                window.location.reload();
               }}
             >
               Logout
