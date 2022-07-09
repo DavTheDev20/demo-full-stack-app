@@ -28,11 +28,18 @@ const Posts = () => {
     getPosts();
   }, []);
 
-  const postStyles = {
+  const desktopPostStyles = {
     margin: '3%',
     borderBottom: '2px solid rgba(123, 123, 123, 0.23)',
     paddingBottom: '15px',
     width: '30%',
+  };
+
+  const mobilePostStyles = {
+    margin: '4%',
+    borderBottom: '2px solid rgba(123, 123, 123, 0.23)',
+    paddingBottom: '15px',
+    width: '95%',
   };
 
   return (
@@ -45,12 +52,22 @@ const Posts = () => {
           <>
             {posts.map((post) => {
               return (
-                <div key={post._id} className="post" style={postStyles}>
+                <div
+                  key={post._id}
+                  className="post"
+                  style={
+                    window.screen.width > 600
+                      ? desktopPostStyles
+                      : mobilePostStyles
+                  }
+                >
                   <h2 style={{ marginBottom: '8px' }}>{post.title}</h2>
                   <p>
                     {post.content.length < 45
                       ? post.content + ' -->'
-                      : post.content.slice(0, 45) + '...'}{' '}
+                      : window.screen.width > 600
+                      ? post.content.slice(0, 45) + '...'
+                      : post.content.slice(0, 30) + '...'}{' '}
                     <Link to={`/posts/${post._id}`}>Read More</Link>
                   </p>
                   <small

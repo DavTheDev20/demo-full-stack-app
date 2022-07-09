@@ -5,13 +5,23 @@ const About = () => {
     <div>
       <Jumbotron text={'About'} />
       <p
-        style={{
-          textAlign: 'center',
-          width: '50%',
-          margin: '15px auto',
-          fontSize: '1.05rem',
-          lineHeight: '1.5',
-        }}
+        style={
+          window.screen.width > 600
+            ? {
+                textAlign: 'center',
+                width: '50%',
+                margin: '15px auto',
+                fontSize: '1.05rem',
+                lineHeight: '1.5',
+              }
+            : {
+                textAlign: 'center',
+                width: '87.5%',
+                margin: '15px auto',
+                fontSize: '1.05rem',
+                lineHeight: '1.5',
+              }
+        }
       >
         <strong>
           Welcome to this application, we are glad you could join us for the

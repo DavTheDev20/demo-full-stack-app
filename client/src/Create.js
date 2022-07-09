@@ -36,6 +36,10 @@ const Create = () => {
   const handleSubmission = async (e) => {
     e.preventDefault();
 
+    if (!postData.title || !postData.content) {
+      return alert('Enter title and content to submit post.');
+    }
+
     await axios({
       method: 'POST',
       url: `${REACT_APP_API_URL}/posts`,

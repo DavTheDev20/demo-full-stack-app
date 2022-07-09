@@ -8,3 +8,9 @@
 .jumbotron h1 {
   margin-left: 10%;
 }
+
+@media screen and (max-width: 600px) {
+  .jumbotron {
+    padding: 13%;
+  }
+}

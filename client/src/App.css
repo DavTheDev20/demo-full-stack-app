@@ -23,3 +23,10 @@ h3 {
 .App button:hover {
   background-color: rgb(255, 111, 111);
 }
+
+@media screen and (max-width: 600px) {
+  .App h2,
+  h3 {
+    margin: 10% 0;
+  }
+}

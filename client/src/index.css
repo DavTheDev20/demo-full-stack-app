@@ -38,3 +38,26 @@ form button {
 form button:hover {
   background-color: rgb(146, 146, 255);
 }
+
+@media screen and (max-width: 600px) {
+  form input {
+    width: 60%;
+    height: 35px;
+    margin: 10px 0;
+    font-size: 1.05rem;
+    padding: 1%;
+  }
+
+  form button {
+    width: 30%;
+    height: 45px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+  }
+
+  form textarea {
+    width: 77%;
+    padding: 5px;
+    font-size: 1.05rem;
+  }
+}
