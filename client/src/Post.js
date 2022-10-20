@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import Jumbotron from './components/Jumbotron';
+import { AiTwotoneLike } from 'react-icons/ai';
 
 const Post = () => {
   const { postId } = useParams();
@@ -50,6 +51,12 @@ const Post = () => {
     cursor: 'pointer',
   };
 
+  const likeStyles = {
+    marginTop: '10px',
+    color: 'black',
+    cursor: 'pointer',
+  };
+
   return (
     <div>
       <Jumbotron text={post.title} />
@@ -59,6 +66,11 @@ const Post = () => {
           Likes: {post.likes.length}
         </small>
         <p>{post.content}</p>
+        <AiTwotoneLike
+          style={likeStyles}
+          size={28}
+          onClick={() => alert('Working...')}
+        />
         <div style={{ marginTop: '10px' }}>
           {editable || userData.admin === true ? (
             <>
